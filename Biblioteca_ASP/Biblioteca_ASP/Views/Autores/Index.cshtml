@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Entidad.Autor>
+
+@{
+    ViewBag.Title = "Listado de Autores";
+}
+
+<h2>Autores</h2>
+
+<p>
+    @Html.ActionLink("Crear Autores", "Crear")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nacionalidad)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nacionalidad)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "EditarAutor", new { id=item.IdAutor }) |
+            @Html.ActionLink("Mostrar Autor", "GetAutor", new { id=item.IdAutor }) |
+            @Html.ActionLink("Eliminar Autor", "EliminarAutor", new { id=item.IdAutor })
+        </td>
+    </tr>
+}
+
+</table>

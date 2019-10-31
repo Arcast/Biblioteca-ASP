@@ -1,0 +1,178 @@
+﻿@model Entidad.Libro
+
+@{
+    ViewBag.Title = "Crear";
+    //ICollection<SelectListItem> autores = (ICollection<SelectListItem>)ViewBag.Autores;
+    int cont = 0;
+    List<int> ListaId = new List<int>();
+}
+
+<h2>Crear</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Libro</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Editorial, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Editorial, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Editorial, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Area, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Area, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Area, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                <div class="col-md-10">
+                    @Html.DropDownList("IdAutor", autores,
+                    new { @class = "form-control" })
+                </div>
+            </div>*@
+
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Seleccionar Autores
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Autores</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div>
+                            <table class="table" id="Seleccion">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Nº</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Nacionalidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var autor in (List<Entidad.Autor>)ViewBag.Autores)
+                                    {
+                                        cont += 1;
+                                        <tr id="filas">
+                                            <td class="selec" id="Chk">
+                                                <div class="custom-control custom-checkbox" id="Ck">
+                                                    <input type="checkbox" class="custom-control-input p" id="IdAut" value=@autor.IdAutor>
+                                                </div>
+                                            </td>
+                                            <td scope="row">@cont</td>                                                                                        
+                                            <td class="selec" id="Nombre">@autor.Nombre</td>
+                                            <td class="selec" id="Nacionalidad">@autor.Nacionalidad</td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" id="btnModal" class="btn btn-primary">Seleccionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <table class="table" id="Seleccionados">
+                <thead class="thead-dark" id="TbThead">
+                    <tr>
+                        <th scope="col" id="ColOcult" style="display:none"></th>
+                        <th scope="col">Nº</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Nacionalidad</th>
+                    </tr>
+                </thead>
+                <tbody id="TbBody">
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btnModal").click(function () {               
+                if ($('#Seleccion').find("input:checkbox:checked").val()) {
+                    $('#Seleccionados #TbBody > tr').remove();
+                    var c = 0
+                    var Seleccionado = $('#Seleccion').find("input:checkbox:checked").closest('#filas').each(function () {
+                        c += 1;
+                        var Id = $(this).children('#Chk').find('input:checkbox').val();
+                        var nombre = $(this).children('#Nombre').text();
+                        var nacionalidad = $(this).children('#Nacionalidad').text();
+
+                        var IngresarFila = '<tr class="filas">' +   
+                                            '<td id="Identif">'+Id+'</td>'  +
+                                            '<td scope="row">'+ c +'</td>'    +                                                                                        
+                                            '<td>'+ nombre +'</td>'    +
+                                            '<td>'+ nacionalidad +'</td>'  +
+                                            '</tr>'     
+
+                        $('#Seleccionados #TbBody').append(IngresarFila);
+                        $('#Seleccionados #TbBody #Identif').hide();
+                        $('#Seleccionados #TbThead #ColOcult').hide();
+                           
+                    });
+
+                    $('#exampleModal').modal('toggle');
+                }             
+
+                }); 
+
+            });
+       
+    </script>
+
+
+}
