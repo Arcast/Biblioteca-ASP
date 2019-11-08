@@ -7,7 +7,7 @@
 <h2>Autores</h2>
 
 <p>
-    @Html.ActionLink("Crear Autores", "Crear")
+    @Html.ActionLink("Crear Autores", "Crear", null , htmlAttributes: new { @class = "btn btn-primary"})
 </p>
 <table class="table">
     <tr>
@@ -20,20 +20,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nacionalidad)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "EditarAutor", new { id=item.IdAutor }) |
-            @Html.ActionLink("Mostrar Autor", "GetAutor", new { id=item.IdAutor }) |
-            @Html.ActionLink("Eliminar Autor", "EliminarAutor", new { id=item.IdAutor })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nacionalidad)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "EditarAutor", new { id = item.IdAutor}, htmlAttributes: new {@class = "btn btn-success" }) |
+                @Html.ActionLink("Mostrar Autor", "GetAutor", new { id = item.IdAutor }, htmlAttributes: new { @class = "btn btn-info"}) |
+                @Html.ActionLink("Eliminar Autor", "EliminarAutor", new { id = item.IdAutor }, htmlAttributes: new {@class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 
 </table>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

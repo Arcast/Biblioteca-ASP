@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidad.ViewsModels
 {
-       public class CrearLibro {
+       public class VM_CrearLibro {
             public String Titulo { get; set; }
             public String Editorial { get; set; }
             public String Area { get; set; }

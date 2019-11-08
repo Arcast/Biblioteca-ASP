@@ -1,4 +1,4 @@
-﻿@model Entidad.Libro
+﻿@model Entidad.ViewsModels.VM_CrearLibro
 
 @{
     ViewBag.Title = "Crear";
@@ -7,15 +7,18 @@
     List<int> ListaId = new List<int>();
 }
 
-<h2>Crear</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Libro</h4>
+
+        <div>
+                <h2  class="Encabezado col-md-6">Crear Libro</h2>
+                <button type="submit" value="Create" class="btn btn-primary col-md-2 Encabezado" id="GuardarLibro">Guardar</button>
+        </div>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -41,18 +44,16 @@
                 @Html.ValidationMessageFor(model => model.Area, "", new { @class = "text-danger" })
             </div>
         </div>
+            
 
-        @*<div class="form-group">
-                <div class="col-md-10">
-                    @Html.DropDownList("IdAutor", autores,
-                    new { @class = "form-control" })
-                </div>
-            </div>*@
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                <button type="button" class="btn btn-success" id="CargarAutor" data-toggle="modal" data-target="#exampleModal">
+                    Seleccionar Autores
+                </button>
+            </div>
+        </div>
 
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Seleccionar Autores
-        </button>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,10 +84,13 @@
                                         <tr id="filas">
                                             <td class="selec" id="Chk">
                                                 <div class="custom-control custom-checkbox" id="Ck">
-                                                    <input type="checkbox" class="custom-control-input p" id="IdAut" value=@autor.IdAutor>
+                                                    <input type="checkbox" aria-label="Checkbox for following text input" id="IdAut" value=@autor.IdAutor>
                                                 </div>
+                                                @*<div class="custom-control custom-checkbox" id="Ck">
+                                                   <input type="checkbox" class="custom-control-input p" id="IdAut" value=@autor.IdAutor>
+                                                </div>*@
                                             </td>
-                                            <td scope="row">@cont</td>                                                                                        
+                                            <td scope="row">@cont</td>
                                             <td class="selec" id="Nombre">@autor.Nombre</td>
                                             <td class="selec" id="Nacionalidad">@autor.Nacionalidad</td>
                                         </tr>
@@ -104,7 +108,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="container">
             <table class="table" id="Seleccionados">
                 <thead class="thead-dark" id="TbThead">
@@ -115,17 +119,10 @@
                         <th scope="col">Nacionalidad</th>
                     </tr>
                 </thead>
-                <tbody id="TbBody">
-                    
-                </tbody>
+                <tbody id="TbBody"></tbody>
             </table>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
 
 
@@ -141,34 +138,52 @@
 
     <script>
         $(document).ready(function () {
+            $("#CargarAutor").click(function () {
+                //Esto no permite que se cierre el modal al dar click afuera
+                $("#exampleModal").modal({ backdrop: 'static', keyboard: false });
+            });
 
-            $("#btnModal").click(function () {               
+            /*Evento del Modal*/
+            $("#btnModal").click(function () {     
                 if ($('#Seleccion').find("input:checkbox:checked").val()) {
                     $('#Seleccionados #TbBody > tr').remove();
                     var c = 0
-                    var Seleccionado = $('#Seleccion').find("input:checkbox:checked").closest('#filas').each(function () {
+                     $('#Seleccion').find("input:checkbox:checked").closest('#filas').each(function () {
                         c += 1;
                         var Id = $(this).children('#Chk').find('input:checkbox').val();
                         var nombre = $(this).children('#Nombre').text();
                         var nacionalidad = $(this).children('#Nacionalidad').text();
 
-                        var IngresarFila = '<tr class="filas">' +   
-                                            '<td id="Identif">'+Id+'</td>'  +
-                                            '<td scope="row">'+ c +'</td>'    +                                                                                        
-                                            '<td>'+ nombre +'</td>'    +
-                                            '<td>'+ nacionalidad +'</td>'  +
-                                            '</tr>'     
+                        var IngresarFila = '<tr class="filas">' +
+                            '<td class="Identif" data-id="'+Id+'">' + Id + '</td>' +
+                            '<td scope="row">' + c + '</td>' +
+                            '<td>' + nombre + '</td>' +
+                            '<td>' + nacionalidad + '</td>' +
+                            '</tr>'
 
                         $('#Seleccionados #TbBody').append(IngresarFila);
-                        $('#Seleccionados #TbBody #Identif').hide();
+                        $('#Seleccionados #TbBody .Identif').hide();
                         $('#Seleccionados #TbThead #ColOcult').hide();
-                           
+                        
                     });
 
                     $('#exampleModal').modal('toggle');
+                } else {
+                    $('#Seleccionados #TbBody > tr').remove();
+                     $('#exampleModal').modal('toggle');
                 }             
 
-                }); 
+            }); 
+
+            /*Evento del boton guardar*/
+
+            $("#GuardarLibro").click(function(event) {
+                event.preventDefault();
+                $(".Identif").each(function () {
+                    var id = $(this).data('id');
+                    []
+                });              
+            });
 
             });
        

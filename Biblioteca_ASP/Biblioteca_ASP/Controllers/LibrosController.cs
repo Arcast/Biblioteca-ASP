@@ -22,11 +22,11 @@ namespace Biblioteca_ASP.Controllers
         }       
 
         [HttpPost]
-        public ActionResult Crear(CrearLibro VistaLibro)
+        public ActionResult Crear(VM_CrearLibro VistaLibro)
         {
             var Lib = new Libro() {Titulo =  VistaLibro.Titulo, Editorial = VistaLibro.Editorial, Area = VistaLibro.Area};
             //Lib.libAuts = new LibAut() { IdAutor = VistaLibro.IdAutor , Libro = Lib};
-            N_Libro.GuardarLibro(Lib);
+           // N_Libro.GuardarLibro(Lib);
             return RedirectToAction("Index");
         }
         public ActionResult Editar(int id)
