@@ -20,19 +20,14 @@ namespace Biblioteca_ASP.Controllers
             ViewBag.Autores = ListaAutores;
             return View();
         }       
-
-        [HttpPost]
-        //public ActionResult Crear(VM_CrearLibro VistaLibro)
-        //{
-        //    var Lib = new Libro() {Titulo =  VistaLibro.Titulo, Editorial = VistaLibro.Editorial, Area = VistaLibro.Area};
-        //    //Lib.libAuts = new LibAut() { IdAutor = VistaLibro.IdAutor , Libro = Lib};
-        //   // N_Libro.GuardarLibro(Lib);
-        //    return RedirectToAction("Index");
-        //}
+             
 
         public JsonResult CrearLibro(VM_CrearLibro Libro)
         {
-          
+            if (ModelState.IsValid)
+            {
+                N_Libro.GuardarLibro(Libro);
+            }
             return Json(Libro, JsonRequestBehavior.AllowGet);
         }
 

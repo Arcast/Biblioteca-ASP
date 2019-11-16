@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entidad;
+using Entidad.ViewsModels;
 
 namespace Negocio
 {
@@ -17,7 +18,7 @@ namespace Negocio
             return daoLibro.ListaLibros();
         }
 
-        public static void GuardarLibro(Libro libro)
+        public static void GuardarLibro(VM_CrearLibro libro)
         {
             daoLibro.GuardarLibro(libro);
         }

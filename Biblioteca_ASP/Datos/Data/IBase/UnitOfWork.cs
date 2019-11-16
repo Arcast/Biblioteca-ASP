@@ -19,12 +19,14 @@ namespace Datos.Datos.IBase
             Autor = new AutorRepository(_Context);
             Estudiante = new EstudianteRepository(_Context);
             Libro = new LibroRepository(_Context);
+            LibAut = new LibAutRepository(_Context);
         }
         public IAutorRepository Autor { get; private set; }
 
         public IEstudianteRepository Estudiante { get; private set; }
 
         public ILibroRepository Libro { get; private set; }
+        public ILibAutRepository LibAut { get; private set; }
 
         public int Complete()
         {

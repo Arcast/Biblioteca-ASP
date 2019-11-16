@@ -58,10 +58,12 @@
     <Compile Include="Data\IBase\UnitOfWork.cs" />
     <Compile Include="Data\Repositories\IRepositorio\IAutorRepository.cs" />
     <Compile Include="Data\Repositories\IRepositorio\IEstudianteRepository.cs" />
+    <Compile Include="Data\Repositories\IRepositorio\ILibAutRepository.cs" />
     <Compile Include="Data\Repositories\IRepositorio\ILibroRepository.cs" />
     <Compile Include="Data\Repositories\IRepositorio\IRepository.cs" />
     <Compile Include="Data\Repositories\Repositorio\AutorRepository.cs" />
     <Compile Include="Data\Repositories\Repositorio\EstudianteRepository.cs" />
+    <Compile Include="Data\Repositories\Repositorio\LibAutRepository.cs" />
     <Compile Include="Data\Repositories\Repositorio\LibroRepository.cs" />
     <Compile Include="Data\Repositories\Repositorio\Repository.cs" />
     <Compile Include="DAL\D_Autor.cs" />
