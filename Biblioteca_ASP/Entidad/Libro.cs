@@ -14,6 +14,7 @@ namespace Entidad
         public Libro()
         {
             libAuts = new HashSet<LibAut>();
+            Prestamos = new HashSet<Prestamo>();
         }
         [Key]
         public int IdLibro { get; set; }
@@ -22,7 +23,7 @@ namespace Entidad
         public String Area { get; set; }
 
         public ICollection<LibAut> libAuts { get; private set; }
-        public ICollection<Prestamo> Prestamos { get; set; }
+        public ICollection<Prestamo> Prestamos { get; private set; }
         public class map
         {
             public map(ref DbModelBuilder modelBuilder)
