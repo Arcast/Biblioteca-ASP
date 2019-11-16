@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Entidad;
 using Entidad.ViewsModels;
+using Datos.Datos.IBase;
 
 namespace Negocio
 {
@@ -18,9 +19,27 @@ namespace Negocio
             return daoLibro.ListaLibros();
         }
 
-        public static void GuardarLibro(VM_CrearLibro libro)
+        public static void GuardarLibro(VM_CrearLibro lib)
         {
-            daoLibro.GuardarLibro(libro);
+            using (var unit = new UnitOfWork(new BibliotecaDbContext()))
+            {
+                Libro l = new Libro();
+                l.Titulo = lib.Titulo;
+                l.Editorial = lib.Editorial;
+                l.Area = lib.Area;
+
+                foreach (var aut in lib.IdAutor)
+                {
+                    LibAut la = new LibAut
+                    {
+                        IdAutor = aut
+                    };
+
+                    l.libAuts.Add(la);
+                }
+                unit.Libro.AddOrUpdate(l);
+                unit.Complete();
+            }
         }
         public static void EditarLibro(Libro libro)
         {

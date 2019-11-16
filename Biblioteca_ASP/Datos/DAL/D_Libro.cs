@@ -25,28 +25,11 @@ namespace Datos
                 return unit.Libro.ListAll().ToList();
             }
         }
-        public void GuardarLibro(VM_CrearLibro lib)
+        public void GuardarLibro(Libro libro)
         {
             using (var unit = new UnitOfWork(new BibliotecaDbContext()))
             {
-                Libro l = new Libro();
-                l.Titulo = lib.Titulo;
-                l.Editorial = lib.Editorial;
-                l.Area = lib.Area;
-                unit.Libro.AddOrUpdate(l);
-                unit.Complete();
-
-                foreach (var aut in lib.IdAutor)
-                {
-                    LibAut la = new LibAut
-                    {
-                        IdLibro = l.IdLibro,
-                        IdAutor = aut
-                    };
-
-                    unit.LibAut.AddOrUpdate(la);
-                }
-
+                unit.Libro.AddOrUpdate(libro);
                 unit.Complete();
             }
         }

@@ -11,13 +11,17 @@ namespace Entidad
 {
     public class Libro
     {
+        public Libro()
+        {
+            libAuts = new HashSet<LibAut>();
+        }
         [Key]
         public int IdLibro { get; set; }
         public String Titulo { get; set; }
         public String Editorial { get; set; }
         public String Area { get; set; }
 
-        public ICollection<LibAut> libAuts { get; set; }
+        public ICollection<LibAut> libAuts { get; private set; }
         public ICollection<Prestamo> Prestamos { get; set; }
         public class map
         {

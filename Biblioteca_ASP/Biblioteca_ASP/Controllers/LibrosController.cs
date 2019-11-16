@@ -1,4 +1,6 @@
-﻿using Entidad;
+﻿using Datos;
+using Datos.Datos.IBase;
+using Entidad;
 using Entidad.ViewsModels;
 using Negocio;
 using System.Collections.Generic;
@@ -22,13 +24,13 @@ namespace Biblioteca_ASP.Controllers
         }       
              
 
-        public JsonResult CrearLibro(VM_CrearLibro Libro)
+        public JsonResult CrearLibro(VM_CrearLibro lib)
         {
             if (ModelState.IsValid)
             {
-                N_Libro.GuardarLibro(Libro);
+                N_Libro.GuardarLibro(lib);
             }
-            return Json(Libro, JsonRequestBehavior.AllowGet);
+            return Json(lib, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Editar(int id)
