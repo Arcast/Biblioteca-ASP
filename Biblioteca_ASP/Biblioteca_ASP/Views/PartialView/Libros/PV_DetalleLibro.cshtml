@@ -1,27 +1,12 @@
 ﻿@model Entidad.Libro
-
-@*@{
+    @{
         ViewBag.Title = "Detalles del Libro";
         int cont = 0;
         IEnumerable<Entidad.Autor> ListaAutores = ViewBag.Autores;
-    }*@
-
-
-<div id="divGet">
-
-</div>
-
-<script src="~/Scripts/jquery-3.4.1.js"></script>
-<script src="~/Scripts/jquery-3.4.1.slim.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-
-<script src="~/Scripts/BibliotecaScript.js"></script>
-<script>
-    load('@Url.Action("DetalleLibro","Libros",new { id = Model.IdLibro })');
-</script>
-
-@*<div>
-        <h4>Libro</h4>
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <div>
+        <h2>Detalle del Libro</h2>
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -47,7 +32,9 @@
             <dd>
                 @Html.DisplayFor(model => model.Area)
             </dd>
+
         </dl>
+
         <div>
             <table class="table">
                 <thead class="thead-dark">
@@ -70,9 +57,9 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.IdLibro }) |
-        @Html.ActionLink("Regresar", "Index")
-    </p>*@
 
+    </div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdLibro }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

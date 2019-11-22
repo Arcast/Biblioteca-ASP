@@ -5,6 +5,7 @@ using Entidad.ViewsModels;
 using Negocio;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Newtonsoft.Json.Serialization;
 
 namespace Biblioteca_ASP.Controllers
 {
@@ -55,6 +56,8 @@ namespace Biblioteca_ASP.Controllers
             N_Libro.EliminarLibro(libro);
             return RedirectToAction("Index");
         }
+
+        
         public ActionResult MostrarLibro(int id)
         {
             var lib = N_Libro.Get_Libro(id);
@@ -62,5 +65,14 @@ namespace Biblioteca_ASP.Controllers
             ViewBag.Autores = ListaAutores;
             return View(lib);
         }
+      
+        public PartialViewResult DetalleLibro(int id)
+        {            
+            var lib = N_Libro.Get_Libro(id);
+            IEnumerable<Autor> ListaAutores = N_Libro.ListarAutoresLibro(id);
+            ViewBag.Autores = ListaAutores;
+            return PartialView("~/Views/PartialView/Libros/PV_DetalleLibro.cshtml", lib);
+        }
+                
     }
 }

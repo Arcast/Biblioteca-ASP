@@ -22,5 +22,7 @@ namespace Biblioteca_ASP.Models
         public System.Data.Entity.DbSet<Entidad.LibAut> LibAuts { get; set; }
 
         public System.Data.Entity.DbSet<Entidad.Libro> Libroes { get; set; }
+
+        public System.Data.Entity.DbSet<Entidad.Estudiante> Estudiantes { get; set; }
     }
 }
