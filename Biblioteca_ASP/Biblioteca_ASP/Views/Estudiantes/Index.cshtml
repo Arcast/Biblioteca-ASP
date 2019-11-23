@@ -7,7 +7,8 @@
 <h2>Listado de Estudiantes</h2>
 
 <p>
-    @Html.ActionLink("Nuevo Estudiante", "Crear", null, htmlAttributes: new {@class = "btn btn-primary" })
+    <button class="btn btn-primary" onclick="F_Crear('@Url.Action("Crear","Estudiantes")')">Nuevo</button>
+    <div class="modal fade" id="ModalCrear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> </div>
 </p>
 <table class="table">
     <tr>
@@ -29,29 +30,78 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CI)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Direccion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Carrera)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Edad)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.IdLector }, htmlAttributes: new{ @class = "btn btn-success"}) |
-            @Html.ActionLink("Detalle", "Details", new { id=item.IdLector }, htmlAttributes: new {@class= "btn btn-info" }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.IdLector }, htmlAttributes: new {@class= "btn btn-danger" })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Carrera)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>
+            @*<td>
+                    @Html.ActionLink("Editar", "Edit", new { id=item.IdLector }, htmlAttributes: new{ @class = "btn btn-success"}) |
+                    @Html.ActionLink("Detalle", "Details", new { id=item.IdLector }, htmlAttributes: new {@class= "btn btn-info" }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id=item.IdLector }, htmlAttributes: new {@class= "btn btn-danger" })
+                </td>*@
+            <td>
+                <div>
+                    <button class="btn btn-primary btn-xs" onclick="F_Editar('@Url.Action("Editar","Estudiantes", new { id = item.IdLector })')">Editar</button>
+                    <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> </div>
+            </td>
+        </tr>
+    }
 </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+   
+    <script>
+
+        function F_Crear(dir) {
+            $.get(dir, function (data) {
+                $("#ModalCrear").html(data);
+                $("#ModalCrear").modal('show');
+            }).fail(function (jqXHR, TextStatus, errorThrown) {
+                error(jqXHR, TextStatus, errorThrown);
+            });
+        }
+   
+        function F_Editar(dir) {
+            $.get(dir, function (data) {             
+                $("#ModalEditar").html(data);
+                $("#ModalEditar").modal('show')               
+                //$("#ModalEditar").modal({ backdrop: "static", keyboard: false });
+            }).fail(function (jqXHR, TextStatus, errorThrown) {
+                error(jqXHR, TextStatus, errorThrown);
+            });
+        }
+    
+    function error(jqXHR, TextStatus, errorThrown) {
+        if (jqXHR === 0) {
+            alert('Not connect: verify Network');
+        } else if (jqXHR.status === 404) {
+            alert('Requested page not found [404]');
+        } else if (jqXHR.status === 500) {
+            alert('Internal server error [500]');
+        } else if (TextStatus === 'pasererror') {
+            alert('Request Json parse failed');
+        } else if (TextStatus === 'timeout') {
+            alert('Time out error');
+        } else if (TextStatus === 'abort') {
+            alert('Ajax request aborted');
+        } else {
+            alert('Uncaught Error : ' + jqXHR.responseText);
+        }
+    }
+    </script>
+}

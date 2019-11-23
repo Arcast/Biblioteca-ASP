@@ -231,6 +231,8 @@
     <Content Include="Views\PartialView\Libros\PV_DetalleLibro.cshtml" />
     <Content Include="Views\Estudiantes\Index.cshtml" />
     <Content Include="Views\PartialView\Estudiantes\PV_Crear.cshtml" />
+    <Content Include="Views\Estudiantes\Editar.cshtml" />
+    <Content Include="Views\Estudiantes\Crear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

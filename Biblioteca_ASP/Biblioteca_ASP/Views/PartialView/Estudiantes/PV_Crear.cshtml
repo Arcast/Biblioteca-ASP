@@ -82,36 +82,51 @@
                 {
                     estud:
                     {
-                        CI : CI,
-                        Nombre : Nombre,
-                        Direccion : Direccion,
-                        Carrera : Carrera,
-                        Edad : Edad
+                        CI: CI,
+                        Nombre: Nombre,
+                        Direccion: Direccion,
+                        Carrera: Carrera,
+                        Edad: Edad
                     }
                 }
 
                 $.ajax(
                     {
-                        type : "POST",
-                        url : '@Url.Action("GuardarEstudiante","Estudiantes")',
-                        data : JSON.stringify(DatoJson),
-                        dataType : 'JSON',
-                        contentType : "application/json; charset=utf-8",
-                        success: function (data)
-                        {
+                        type: "POST",
+                        url: '@Url.Action("GuardarEstudiante","Estudiantes")',
+                        data: JSON.stringify(DatoJson),
+                        dataType: 'JSON',
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
                             alert("Estudiante guardado correctamente...!");
-                        }, 
-                        error: function (jqXHR, TextStatus, errorThrow)
-                        {
+                        },
+                        error: function (jqXHR, TextStatus, errorThrow) {
                             Error(jqXHR, TextStatus, errorThrow);
                         }
                     }
-                ).done(function(result)
-                {
+                ).done(function (result) {
                     console.log(result);
                 });
 
             });
-        })
+        });
+
+        function error(jqXHR, TextStatus, errorThrown) {
+            if (jqXHR === 0) {
+                alert('Not connect: verify Network');
+            } else if (jqXHR.status === 404) {
+                alert('Requested page not found [404]');
+            } else if (jqXHR.status === 500) {
+                alert('Internal server error [500]');
+            } else if (TextStatus === 'pasererror') {
+                alert('Request Json parse failed');
+            } else if (TextStatus === 'timeout') {
+                alert('Time out error');
+            } else if (TextStatus === 'abort') {
+                alert('Ajax request aborted');
+            } else {
+                alert('Uncaught Error : ' + jqXHR.responseText);
+            }
+        }
     </script>
 }

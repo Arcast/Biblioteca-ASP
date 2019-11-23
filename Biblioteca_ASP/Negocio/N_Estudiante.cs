@@ -34,5 +34,24 @@ namespace Negocio
                 unit.Complete();
             }
         }
+
+        public static Estudiante BuscarEstudiante(int id)
+        {
+            using (var unit = new UnitOfWork(new BibliotecaDbContext()))
+            {
+                var estud = unit.Estudiante.GetByID(id);
+                return estud;
+            }
+        }
+
+        public static void EditarEstudiante(Estudiante estudiante)
+        {
+            using (var unit = new UnitOfWork(new BibliotecaDbContext()))
+            {
+                unit.Estudiante.AddOrUpdate(estudiante);
+                unit.Complete();
+            }
+        }
+
     }
 }
