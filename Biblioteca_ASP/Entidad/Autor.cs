@@ -17,7 +17,7 @@ namespace Entidad
     {
         [Key]
         public int IdAutor { get; set; }
-        [DisplayName("Nombre del Autor")]
+        //[DisplayName("Nombre del Autor")]
         public String Nombre { get; set; }
         public String Nacionalidad { get; set; }
         public Boolean Estatus { get; set; } = true;

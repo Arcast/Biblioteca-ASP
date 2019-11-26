@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Entidad.Autor>
+
+
+    <p>
+        <button class="btn btn-primary" onclick="F_CrearAutor('@Url.Action("CrearAutor","Autores")')">Nuevo autor</button>
+        <div class="modal fade" id="ModalCrear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> </div>
+    </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nacionalidad)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nacionalidad)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "EditarAutor", new { id = item.IdAutor }, htmlAttributes: new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Mostrar Autor", "GetAutor", new { id = item.IdAutor }, htmlAttributes: new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Eliminar Autor", "EliminarAutor", new { id = item.IdAutor }, htmlAttributes: new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function F_CrearAutor(direccion) {
+        $.get(direccion, function (dato) {
+            $("#ModalCrear").html(dato);
+            $("#ModalCrear").modal("show");
+        }).fail(function (jqXHR, TextStatus, errorThrown) {
+                error(jqXHR, TextStatus, errorThrown);
+            });
+    }
+
+
+    function error(jqXHR, TextStatus, errorThrown) {
+        if (jqXHR === 0) {
+            alert('Not connect: verify Network');
+        } else if (jqXHR.status === 404) {
+            alert('Requested page not found [404]');
+        } else if (jqXHR.status === 500) {
+            alert('Internal server error [500]');
+        } else if (TextStatus === 'pasererror') {
+            alert('Request Json parse failed');
+        } else if (TextStatus === 'timeout') {
+            alert('Time out error');
+        } else if (TextStatus === 'abort') {
+            alert('Ajax request aborted');
+        } else {
+            alert('Uncaught Error : ' + jqXHR.responseText);
+        }
+    }
+</script>
+
+

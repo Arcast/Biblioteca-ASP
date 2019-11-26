@@ -233,6 +233,7 @@
     <Content Include="Views\PartialView\Estudiantes\PV_Crear.cshtml" />
     <Content Include="Views\Estudiantes\Editar.cshtml" />
     <Content Include="Views\Estudiantes\Crear.cshtml" />
+    <Content Include="Views\PartialView\Autores\PV_IndexAutor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

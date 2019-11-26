@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using Entidad;
 using Entidad.FluentValidation;
+using Entidad.ViewsModels.Vm_Autor;
 using Negocio;
 
 
@@ -12,28 +13,31 @@ namespace Biblioteca_ASP.Controllers
     {
         // GET: Autores
         public ActionResult Index()
+        {          
+            return View();
+        }       
+       
+        public PartialViewResult PV_Index()
         {
             var ListAutores = N_Autor.ListarAutores();
-            return View(ListAutores);
-        }
-        public ActionResult Crear()
-        {
-            return View();
+            return PartialView("~/Views/PartialView/Autores/PV_IndexAutor.cshtml", ListAutores);
         }
 
-        [HttpPost]
-        public ActionResult Crear(Autor autor)
+        public PartialViewResult CrearAutor()
         {
-
+            return PartialView("~/Views/Autores/Crear.cshtml");
+        }              
+               
+        public JsonResult Crear(VM_CrearAutor autor)
+        {
             if (ModelState.IsValid)
             {
-                N_Autor.GuardarAutor(autor);
-                return RedirectToAction("Index");
-
+                var aut = new Autor();
+                aut.Nombre = autor.Nombre;
+                aut.Nacionalidad = autor.Nacionalidad;
+                N_Autor.GuardarAutor(aut);                
             }
-            ModelState.AddModelError("", "Ocurrio un error al guardar el autor");
-            return View(autor);
-
+            return Json(autor, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetAutor(int id)
         {
