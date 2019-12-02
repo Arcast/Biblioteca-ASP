@@ -1,52 +1,111 @@
 ﻿@model Entidad.Autor
 
-@{
-    ViewBag.Title = "Eliminar Autor";
-}
-
-<h2>EliminarAutor</h2>
-
-<h3>Desea eliminar este autor?</h3>
-<div>
-    <h4>Datos del Autor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Nacionalidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nacionalidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estatus)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm("EliminarAutor", "Autores", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-
-        @Html.HiddenFor(model => model.IdAutor)
-
-
-        <div class="form-actions no-color">
-            <button type="submit" value="Eliminar" class="btn btn-danger">Eliminar</button> |
-            @Html.ActionLink("Regresar", "Index")
+<!-- Modal -->
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Desea eliminar este autor?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    }
+        <div class="modal-body">
+
+            <div>
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Nombre)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nacionalidad)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Nacionalidad)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Estatus)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Estatus)
+                    </dd>
+                                      
+                 </dl>                
+                
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" id="Eliminar" class="btn btn-primary" data-dismiss="modal" onclick="F_EliminarAutor(@Model.IdAutor)">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>           
+        </div>
+
+    </div>
 </div>
+
+<script>
+
+        function F_EliminarAutor(Id) {
+            event.preventDefault();
+            var IdAutor = Id;
+
+            var DataJson =
+            {
+                Id:
+                {
+                    Id : IdAutor
+                }
+            }
+
+            console.log(DataJson);
+
+            @*$.ajax({
+                type: 'POST',
+                url: '@Url.Action("Eliminar","Autores")',
+                data: JSON.stringify(DataJson),                
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                success: function (json)
+                    {
+                    alert("Eliminado correctamente");
+                    },  error: function (jqXHR, TextStatus, errorThrow) {
+                            Error(jqXHR, TextStatus, errorThrow);
+                        }
+                }).done(function (result)
+            {
+                console.log(result);
+            });*@
+
+         }
+
+        function error(jqXHR, TextStatus, errorThrown) {
+            if (jqXHR === 0) {
+                alert('Not connect: verify Network');
+            } else if (jqXHR.status === 404) {
+                alert('Requested page not found [404]');
+            } else if (jqXHR.status === 500) {
+                alert('Internal server error [500]');
+            } else if (TextStatus === 'pasererror') {
+                alert('Request Json parse failed');
+            } else if (TextStatus === 'timeout') {
+                alert('Time out error');
+            } else if (TextStatus === 'abort') {
+                alert('Ajax request aborted');
+            } else {
+                alert('Uncaught Error : ' + jqXHR.responseText);
+            }
+        }
+
+</script>
+

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Entidad.Autor>
 
 
-    <p>
-        <button class="btn btn-primary" onclick="F_CrearAutor('@Url.Action("CrearAutor","Autores")')">Nuevo autor</button>
-        <div class="modal fade" id="ModalCrear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> </div>
-    </p>
+<p>
+    <button class="btn btn-primary" onclick="F_CrearAutor('@Url.Action("CrearAutor","Autores")')">Nuevo autor</button>
+    <div class="modal fade" id="ModalCrear" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> </div>
+</p>
 <table class="table">
     <tr>
         <th>
@@ -26,14 +26,18 @@
                 @Html.DisplayFor(modelItem => item.Nacionalidad)
             </td>
             <td>
-                @Html.ActionLink("Editar", "EditarAutor", new { id = item.IdAutor }, htmlAttributes: new { @class = "btn btn-success" }) |
-                @Html.ActionLink("Mostrar Autor", "GetAutor", new { id = item.IdAutor }, htmlAttributes: new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Eliminar Autor", "EliminarAutor", new { id = item.IdAutor }, htmlAttributes: new { @class = "btn btn-danger" })
+                <button class="btn btn-success" onclick="F_EditarAutor('@Url.Action("EditarAutor","Autores",new { id = item.IdAutor })')">Editar</button> |
+                <button class="btn btn-info" onclick="F_MostrarAutor('@Url.Action("MostrarAutor","Autores",new { id = item.IdAutor })')">Mostrar</button> |
+                <button class="btn btn-danger" onclick="F_EliminarAutor('@Url.Action("EliminarAutor","Autores",new { id = item.IdAutor })')">Eliminar</button> 
             </td>
         </tr>
     }
 
 </table>
+
+@*Aqui se cargan los modales de editar, mostrar y eliminar autor*@
+<div class="modal fade" id="ModalAuxiliar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> </div>
+
 
 <script>
     function F_CrearAutor(direccion) {
@@ -41,10 +45,36 @@
             $("#ModalCrear").html(dato);
             $("#ModalCrear").modal("show");
         }).fail(function (jqXHR, TextStatus, errorThrown) {
-                error(jqXHR, TextStatus, errorThrown);
-            });
+            error(jqXHR, TextStatus, errorThrown);
+        });
     }
 
+    function F_EditarAutor(direccion) {
+        $.get(direccion, function (dato) {
+            $("#ModalAuxiliar").html(dato);
+            $("#ModalAuxiliar").modal("show");
+        }).fail(function (jqXHR, TextStatus, errorThrown) {
+            error(jqXHR, TextStatus, errorThrown);
+        });
+    }
+
+    function F_MostrarAutor(direccion) {
+        $.get(direccion, function (dato) {
+            $("#ModalAuxiliar").html(dato);
+            $("#ModalAuxiliar").modal("show");
+        }).fail(function (jqXHR, TextStatus, errorThrown) {
+            error(jqXHR, TextStatus, errorThrown);
+        });
+    }
+
+     function F_EliminarAutor(direccion) {
+        $.get(direccion, function (dato) {
+            $("#ModalAuxiliar").html(dato);
+            $("#ModalAuxiliar").modal("show");
+        }).fail(function (jqXHR, TextStatus, errorThrown) {
+            error(jqXHR, TextStatus, errorThrown);
+        });
+    }
 
     function error(jqXHR, TextStatus, errorThrown) {
         if (jqXHR === 0) {

@@ -210,7 +210,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Autores\Index.cshtml" />
-    <Content Include="Views\Autores\GetAutor.cshtml" />
+    <Content Include="Views\Autores\MostrarAutor.cshtml" />
     <Content Include="Views\Autores\EditarAutor.cshtml" />
     <Content Include="Views\Autores\EliminarAutor.cshtml" />
     <Content Include="Views\Autores\Crear.cshtml" />

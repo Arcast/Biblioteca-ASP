@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using System.Web.Services;
 using Entidad;
 using Entidad.FluentValidation;
 using Entidad.ViewsModels.Vm_Autor;
@@ -39,20 +40,16 @@ namespace Biblioteca_ASP.Controllers
             }
             return Json(autor, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetAutor(int id)
+        public PartialViewResult MostrarAutor(int id)
         {
-            var autor = N_Autor.Get_Autor(id);
-            return View(autor);
+            var aut = N_Autor.Get_Autor(id);
+            return PartialView("~/Views/Autores/MostrarAutor.cshtml", aut);
         }
 
-        public ActionResult EditarAutor(int id)
+        public PartialViewResult EditarAutor(int id)
         {
-            if (id == 0)
-            {
-                return RedirectToAction("Error");
-            }
             var aut = N_Autor.Get_Autor(id);
-            return View(aut);
+            return PartialView("~/Views/Autores/EditarAutor.cshtml", aut);
         }
         [HttpPost]
         public ActionResult EditarAutor(Autor autor)
@@ -64,31 +61,19 @@ namespace Biblioteca_ASP.Controllers
                 }
             return RedirectToAction("Error");
         }
-        public ActionResult EliminarAutor(int? id)
+        public PartialViewResult EliminarAutor(int id)
         {
-            if (id == null)
-            {
-                return RedirectToAction("Error");
-            }
-            var aut = N_Autor.Get_Autor(id.Value);
-            return View(aut);
+            var aut = N_Autor.Get_Autor(id);
+            return PartialView("~/Views/Autores/EliminarAutor.cshtml", aut);
         }
-        [HttpPost]
-        public ActionResult EliminarAutor(int Id)
+               
+        public JsonResult Eliminar(int Id)
         {
-            try
-            {
+          
                 var aut = N_Autor.Get_Autor(Id);
                 N_Autor.EliminarAutor(aut);
-                return RedirectToAction("Index");
-            }
-            catch (Exception)
-            {
-                var aut = N_Autor.Get_Autor(Id);
-                return View(aut);
-            }
-               
-            
+
+            return Json(Id, JsonRequestBehavior.AllowGet);
           
         }
 
